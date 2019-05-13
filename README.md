@@ -28,7 +28,7 @@ upper_case_full_names = []
 ### Answer
 
 ```rb
-
+students.each { |element| upper_case_full_names.push("#{element[:first_name].upcase} #{element[:last_name].upcase}") } 
 [ 'AHMED ALTHAGAFI', 'NORAH ALSHEHRI', 'HANEEN ALGHAMDI' ]
 
 ```
@@ -83,7 +83,10 @@ first_order_for_each_user = []
 ### Answer
 
 ```rb
-
+users.each { |person| person.select { |key, value| first_order_for_each_user.push(value[0]) } } # but it also takes the 1st index of the 1st key (name)
+users.each { |person| first_order_for_each_user.push(person.fetch(:orders)) } # this one gets all the orders
+# try fetch 
+users.each { |person| first_order_for_each_user.push(person.fetch(:orders)[0]) } # this one gets the first orders
 [ {description: "a bike"}, {description: "bees"}, {description: "a MacBook"} ]
 ```
 
@@ -153,7 +156,14 @@ coffee_average_per_person = []
 ### Answer
 
 ```rb
+people.each { |person| coffee_average_per_person.push( person.select {|key, value| key == :name } ) } #pushes hashes with name key and value
+# [{:name=>"Jawaher"}, {:name=>"Nader"}, {:name=>"Samah"}]
 
+people.each { |person| coffee_average_per_person.push( person.select {|key, value| key == :name} , :coffee_average=> 0+ person.values_at(:transactions) ) } #pushes hashes with name key and value
+# [{:name=>"Jawaher"}, {:name=>"Nader"}, {:name=>"Samah"}]
+
+people.each { |person| person.select {|key, value| transactions.each { |element| element.values_at(:amount) } } } #by my undertanding this one should give back amounts values? 
+#i know i'm doing something wrong 
 [ 
   {name: "Jawaher", :coffee_average=>5.93}, 
   {name: "Nader", :coffee_average=>4.43}, 
